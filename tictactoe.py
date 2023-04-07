@@ -3,8 +3,8 @@ import random
 # initialize game variables
 board = ["-"] * 9
 currentPlayer = "X"
-winner = None
 gameRunning = True
+winner = None
 
 # function to print game board
 def printBoard(board):
@@ -17,19 +17,44 @@ def printBoard(board):
 # function for player to make a move
 def playerMove(board):
     while True:
-        # ask for input from current player
         ipn = int(input("Enter a number 1 - 9: ")) - 1
-        # check if selected spot is available
         if board[ipn] == "-":
-            # update board with player's move
             board[ipn] = currentPlayer
             break
         else:
             print("That spot is already taken. Try again.")
 
+def switchPlayer(board):
+    global currentPlayer
+    if currentPlayer == "X":
+        currentPlayer = "O"
+    else :
+        currentPlayer = "X"
+
+             
+# heckWinHorizontal function
+def checkWinHorizontal(board):
+    if board[0] == board[1] == board[2] != "-":
+        print(f"{currentPlayer} Won !")
+        return True
+    elif board[3] == board[4] == board[5] != "-" :
+        print(f"{currentPlayer} Won !")
+        return True
+    elif board[6] == board[7] == board[8] != "-":
+        print(f"{currentPlayer} Won !")
+        return True
+    else:
+        return False
+
+# checkIfWin function
+def checkIfWin(board):
+    global gameRunning
+    if checkWinHorizontal(board):
+        gameRunning = False
+
 # main game loop
-while gameRunning :
-    # print current state of game board
+while gameRunning:
     printBoard(board)
-    # ask current player to make a move
     playerMove(board)
+    checkIfWin(board)
+    switchPlayer(board)
