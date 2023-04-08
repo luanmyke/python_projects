@@ -1,10 +1,10 @@
 import random
 
 # initialize game variables
-board = ["-"] * 9
+board = ["-"] * 9 
 currentPlayer = "X"
 gameRunning = True
-winner = None
+
 
 # function to print game board
 def printBoard(board):
@@ -30,9 +30,8 @@ def switchPlayer(board):
         currentPlayer = "O"
     else :
         currentPlayer = "X"
-
-             
-# heckWinHorizontal function
+         
+# checkWinHorizontal function
 def checkWinHorizontal(board):
     if board[0] == board[1] == board[2] != "-":
         print(f"{currentPlayer} Won !")
@@ -46,15 +45,50 @@ def checkWinHorizontal(board):
     else:
         return False
 
+def checkWinRow(board):
+    if board[0] == board[4] == board[8] != "-":
+        print(f"{currentPlayer} Won !")
+        return True
+    elif board[1] == board[4] == board[7] != "-" :
+        print(f"{currentPlayer} Won !")
+        return True
+    elif board[2] == board[4] == board[6] != "-":
+        print(f"{currentPlayer} Won !")
+        return True
+    elif board[0] == board[3] == board[6] != "-":
+        print(f"{currentPlayer} Won !")
+        return True
+    elif board[1] == board[4] == board[7] != "-":
+        print(f"{currentPlayer} Won !")
+        return True
+    elif board[3] == board[6] == board[8] != "-":
+        print(f"{currentPlayer} Won !")
+        return True
+    else:
+        return False
+
+def checkTie(board):
+    if "-" not in board:
+        print("Game is a tie!")
+        return True
+    else:
+        return False
+    
 # checkIfWin function
 def checkIfWin(board):
     global gameRunning
-    if checkWinHorizontal(board):
+    if checkWinHorizontal(board) or checkWinRow(board):
         gameRunning = False
-
+    elif checkTie(board):
+        gameRunning = False
+   
 # main game loop
 while gameRunning:
     printBoard(board)
     playerMove(board)
     checkIfWin(board)
+    if not gameRunning:
+        break
+    checkTie(board)
     switchPlayer(board)
+
